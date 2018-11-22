@@ -1,0 +1,45 @@
+Homework1: 
+ use hello_mysql;
+ create table shopping_trolley(
+    -> id int primary key not null auto_increment,
+    -> name varchar(20) not null unique,
+    -> favorite varchar(20),
+    -> discount float,
+    -> wish varchar(45));
+ desc shopping_trolley;
+ insert into shopping_trolley(id,name,favorite,discount,wish) value       
+    -> (1,"hahaha","shoes",7.5,"three shoes and two coats");
+ insert into shopping_trolley(name,favorite,discount,wish) values     
+    -> ("lalala","dress",6.0,"two dresses and one coat"),
+    -> ("hehehe","book",5.0,"five books"),
+    -> ("dadada","cosmetics",8.5,"two lipsticks and three eyebrow pencils"),
+    -> ("bababa","food",7.5,"four bread"),
+    -> ("fafafa","cup",5.5,"six cups");
+ select * from shopping_trolley;
+ update shopping_trolley set wish="six cups and four forks" where id=6;
+ select * from shopping_trolley;
+ delete from shopping_trolley where id=5;
+ select * from shopping_trolley;
+
+Homework2:
+ source /home/yangning/Desktop/hr.sql;
+ show tables;
+ select * from emp;
+ select * from emp where empno=7521;
+ select * from emp order by sal desc;
+ select * from emp order by sal desc limit 3,4;
+ select * from emp where deptno>20 or deptno<20;
+ select count(sal),deptno from emp group by deptno having deptno>20 or deptno<20;
+ select * from emp where emp.sal in (select distinct(sal) from emp group by sal having count(sal)>1);
+ select * from emp where emp.empno in (select max(empno) from emp group by sal having count(sal)>1); 
+
+ select * from emp,dept where emp.deptno=dept.deptno \G;         
+ select loc from dept,emp where dept.deptno=emp.deptno;
+ select loc,sal from dept,emp where sal>1250 and sal<3000 and dept.deptno=emp.deptno;
+  select dept.deptno,emp.deptno,dept.loc from dept left join emp on dept.deptno=emp.deptno;
+
+
+
+
+
+
