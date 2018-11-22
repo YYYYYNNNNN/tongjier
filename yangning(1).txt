@@ -1,0 +1,51 @@
+Homework1: 
+ use hello_mysql;
+ create table shopping_trolley(
+    -> id int primary key not null auto_increment,
+    -> name varchar(20) not null unique,
+    -> favorite varchar(20),
+    -> discount float,
+    -> wish varchar(45));
+ desc shopping_trolley;
+ insert into shopping_trolley(id,name,favorite,discount,wish) value       
+    -> (1,"hahaha","shoes",7.5,"three shoes and two coats");
+ insert into shopping_trolley(name,favorite,discount,wish) values     
+    -> ("lalala","dress",6.0,"two dresses and one coat"),
+    -> ("hehehe","book",5.0,"five books"),
+    -> ("dadada","cosmetics",8.5,"two lipsticks and three eyebrow pencils"),
+    -> ("bababa","food",7.5,"four bread"),
+    -> ("fafafa","cup",5.5,"six cups");
+ select * from shopping_trolley;
+ update shopping_trolley set wish="six cups and four forks" where id=6;
+ select * from shopping_trolley;
+ delete from shopping_trolley where id=5;
+ select * from shopping_trolley;
+
+Homework2:
+ source /home/yangning/Desktop/hr.sql;
+ show tables;
+ select * from job_history;
+ select * from job_history where department_id=20;
+ select * from job_history order by employee_id desc;
+ select * from job_history order by employee_id desc limit 3,4;
+ select * from job_history where employee_id>102 and employee_id<=200;
+ select count(department_id),employee_id from job_history group by employee_id having employee_id>102 and employee_id<=200;
+ select * from job_history;
+ select * from jobs;
+ select * from jobs,job_history where jobs.job_id=job_history.job_id \G;        
+ select distinct(job_title) from jobs,job_history where jobs.job_id=job_history.job_id;
+ select jobs.job_id,job_history.job_id,min_salary,max_salary from jobs left join job_history on jobs.job_id=job_history.job_id;
+ 
+
+ select * from departments;
+ select * from departments where departments.department_id in (select max(department_id) from departments group by location_id having count(location_id)>1);
+select * from departments where departments.department_id not in (select max(department_id) from departments group by location_id having count(location_id)>1);
+
+
+ 
+
+
+
+
+
+
