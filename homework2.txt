@@ -1,0 +1,182 @@
+homework1:
+ sudo mysql -u root -p
+[sudo] password for yangning: 
+Sorry, try again.
+[sudo] password for yangning: 
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 4
+Server version: 5.7.24-0ubuntu0.18.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| hello_mysql        |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.02 sec)
+
+mysql> use hello_mysql;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> create table movies(
+    -> id int primary key not null auto_increment,
+    -> movie_name varchar(40) not null,
+    -> director varchar(20) not null,
+    -> year int not null,
+    -> score float);
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> desc movies;
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| id         | int(11)     | NO   | PRI | NULL    | auto_increment |
+| movie_name | varchar(40) | NO   |     | NULL    |                |
+| director   | varchar(20) | NO   |     | NULL    |                |
+| year       | int(11)     | NO   |     | NULL    |                |
+| score      | float       | YES  |     | NULL    |                |
++------------+-------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into movies(movie_name,director,year,score) values
+    -> ("The development of China","yangning",2035,9.9),
+    -> ("Our beautil village","baoyanqiu",2070,5.7),
+    -> ("Our home in moon","yanyajun",2080,5.8),
+    -> ("Please give me strong","zhangjiatong",2045,6.7);
+Query OK, 4 rows affected (0.06 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from movies;
++----+--------------------------+--------------+------+-------+
+| id | movie_name               | director     | year | score |
++----+--------------------------+--------------+------+-------+
+|  1 | The development of China | yangning     | 2035 |   9.9 |
+|  2 | Our beautil village      | baoyanqiu    | 2070 |   5.7 |
+|  3 | Our home in moon         | yanyajun     | 2080 |   5.8 |
+|  4 | Please give me strong    | zhangjiatong | 2045 |   6.7 |
++----+--------------------------+--------------+------+-------+
+4 rows in set (0.01 sec)
+
+mysql> select * from movies where "Our beautil village" regexp movies.movie_name;
++----+---------------------+-----------+------+-------+
+| id | movie_name          | director  | year | score |
++----+---------------------+-----------+------+-------+
+|  2 | Our beautil village | baoyanqiu | 2070 |   5.7 |
++----+---------------------+-----------+------+-------+
+1 row in set (0.01 sec)
+
+mysql> select * from movies where movie_name like "%Please give me strong%";mysql> select * from movies where director like "%baoyanqiu%";
++----+---------------------+-----------+------+-------+
+| id | movie_name          | director  | year | score |
++----+---------------------+-----------+------+-------+
+|  2 | Our beautil village | baoyanqiu | 2070 |   5.7 |
++----+---------------------+-----------+------+-------+
+1 row in set (0.00 sec)
+
+mysql> select * from movies where "yangning" regexp movies.director; 
++----+--------------------------+----------+------+-------+
+| id | movie_name               | director | year | score |
++----+--------------------------+----------+------+-------+
+|  1 | The development of China | yangning | 2035 |   9.9 |
++----+--------------------------+----------+------+-------+
+1 row in set (0.00 sec)
+
+mysql> select * from movies where director like "%baoyanqiu%";
++----+---------------------+-----------+------+-------+
+| id | movie_name          | director  | year | score |
++----+---------------------+-----------+------+-------+
+|  2 | Our beautil village | baoyanqiu | 2070 |   5.7 |
++----+---------------------+-----------+------+-------+
+1 row in set (0.00 sec)
+
+mysql> select movie_name from movies where movies.year=2080;
++------------------+
+| movie_name       |
++------------------+
+| Our home in moon |
++------------------+
+1 row in set (0.01 sec)
+
+mysql> select movie_name,score from movies where score>9;
++--------------------------+-------+
+| movie_name               | score |
++--------------------------+-------+
+| The development of China |   9.9 |
++--------------------------+-------+
+1 row in set (0.00 sec)
+
+
+homework2:
+mysql> create table user(
+    -> id int primary key not null auto_increment,
+    -> username varchar(20),
+    -> method varchar(10),
+    -> logindate datetime);
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> insert into user(username,method,logindate) values  ("baoyanqiu","ipad",19981122);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from user;
++----+-----------+--------+---------------------+
+| id | username  | method | logindate           |
++----+-----------+--------+---------------------+
+|  1 | baoyanqiu | ipad   | 1998-11-22 00:00:00 |
++----+-----------+--------+---------------------+
+1 row in set (0.00 sec)
+
+mysql> insert into user(username,method,logindate) values  ("zhangjiatong","pc",19880213), ("yanyajun","app",19981223), ("yangning","ipad",19990523);
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from user;
++----+--------------+--------+---------------------+
+| id | username     | method | logindate           |
++----+--------------+--------+---------------------+
+|  1 | baoyanqiu    | ipad   | 1998-11-22 00:00:00 |
+|  8 | zhangjiatong | pc     | 1988-02-13 00:00:00 |
+|  9 | yanyajun     | app    | 1998-12-23 00:00:00 |
+| 10 | yangning     | ipad   | 1999-05-23 00:00:00 |
++----+--------------+--------+---------------------+
+4 rows in set (0.00 sec)
+
+mysql> update user set logindate=20181111 where id=8;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update user set logindate=20181116 where id=9;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select case
+    ->  when abs(datediff(logindate,now()))>30 then "go out"
+    ->  when abs(datediff(logindate,now()))>9 then "why not go home"    ->  when abs(datediff(logindate,now()))>7 then "go home"                       ->  end from user;                                                         +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| case
+ when abs(datediff(logindate,now()))>30 then "go out"
+ when abs(datediff(logindate,now()))>9 then "why not go home"
+ when abs(datediff(logindate,now()))>7 then "go home"
+ end |
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| go out                                                                                                                                                                              |
+| why not go home                                                                                                                                                                     |
+| go home                                                                                                                                                                             |
+| go out                                                                                                                                                                              |
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+4 rows in set (0.00 sec)
+
+
